@@ -1,1 +1,155 @@
 @import "tailwindcss";
+
+@theme {
+  --breakpoint-xxs: 360px;
+  --breakpoint-xs: 480px;
+  --breakpoint-3xl: 1900px;
+
+  --text-3_5xl: 2rem;
+
+  --font-display: 'KugileFont', serif;
+  --font-Libre: 'Libre Baskerville', sans-serif;
+  --font-signature: 'Kunstler Script', cursive;
+  --font-Ruwudu: 'Ruwudu', cursive;
+  --font-Roboto: 'Roboto', sans-serif;
+
+  --max-width-8xl: 90rem;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+body::-webkit-scrollbar{
+    display: none;
+    overflow-y: scroll;
+}
+
+/* Animation Keyframes for Landing Page */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+.fade-in-down {
+  opacity: 0;
+}
+.fade-in-down.is-visible {
+  animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.fade-in-up {
+  opacity: 0;
+}
+.fade-in-up.is-visible {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.fade-in-left {
+  opacity: 0;
+}
+.fade-in-left.is-visible {
+  animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+.fade-in-right {
+  opacity: 0;
+}
+.fade-in-right.is-visible {
+  animation: fadeInRight 0.8s ease-out forwards;
+}
+
+
+
+
+
+/* Animation Keyframes for Authentication Page*/
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-in-from-left {
+    animation: slideInFromLeft 1.2s ease-out forwards;
+}
+
+.animate-slide-in-from-right {
+    animation: slideInFromRight 1.2s ease-out forwards;
+}
+
+.animate-slide-in-from-bottom {
+    animation: slideInFromBottom 1s ease-out forwards;
+    opacity: 0;
+}
+

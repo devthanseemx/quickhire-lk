@@ -5,11 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuickHire LK - Section as Parent</title>
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/fonts.css">
-    <link rel="stylesheet" href="assets/css/animation.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../dist/output.css">
+    <script src="../assets/js/jquery-3.7.1.min.js"></script>
 </head>
 
 <body class="flex flex-col select-none">
@@ -17,13 +15,11 @@
     <!-- Hero Section -->
     <header id="hero" class="hero relative p-2 sm:p-4 h-screen">
 
-        <!-- ONE image behind, three windows in front -->
         <div class="videos-container absolute inset-0 z-0 m-2">
 
-            <!-- Continuous background image (only once) -->
             <video autoplay muted loop playsinline
                 class="absolute inset-0 w-full h-full object-cover rounded-xl z-0 pointer-events-none select-none">
-                <source src="assets/videos/Hero-Section-Bg.mp4" type="video/mp4">
+                <source src="../assets/videos/Hero-Section-Bg.mp4" type="video/mp4">
             </video>
 
 
@@ -37,7 +33,7 @@
 
             <!-- Desktop top-left window -->
             <div
-                class="window desktop-window absolute top-0 left-0 h-[60%] rounded-tl-lg rounded-br-xl overflow-hidden bg-transparent window-border z-10bg-white">
+                class="window hidden 3xl:block absolute top-0 left-0 h-[60%] w-[9%] rounded-tl-lg rounded-br-xl overflow-hidden bg-transparent window-border z-10">
             </div>
 
             <!-- Bottom-right window -->
@@ -59,7 +55,7 @@
         <div class="relative z-10 h-full flex flex-col mt-5">
 
             <nav
-                class="hidden lg:flex w-full custom-width mx-auto mt-8 px-6 py-5 justify-between items-center z-30 text-white">
+                class="hidden lg:flex w-full max-w-8xl mx-auto mt-8 px-6 py-5 justify-between items-center z-30 text-white">
 
                 <div class="text-3xl uppercase animate-on-scroll fade-in-right">QuickHire LK</div>
 
@@ -117,7 +113,8 @@
                         <a href="#about" class="nav-link block px-3 py-2 rounded-md text-gray-700">About</a>
                         <a href="#footer" class="nav-link block px-3 py-2 rounded-md text-gray-700">Contact Us</a>
                         <div class="w-full p-2">
-                            <button class="bg-indigo-700 py-2 px-4 rounded-xl text-white font-medium mt-3 w-full"> <a href="authentication/login.php">Sign in</a> </button>
+                            <button class="bg-indigo-700 py-2 px-4 rounded-xl text-white font-medium mt-3 w-full"> <a
+                                    href="authentication/login.php">Sign in</a> </button>
                         </div>
                     </div>
 
@@ -125,16 +122,16 @@
             </div>
 
             <div
-                class="flex-grow flex flex-col mt-15 px-6 justify-around w-full custom-width lg:custom-width lg:mt-1 mx-auto">
+                class="flex-grow flex flex-col mt-15 px-6 justify-around w-full max-w-8xl lg:max-w-8xl lg:mt-1 mx-auto">
                 <div class="max-w-4xl text-center md:text-left text-white flex flex-col items-center md:items-start">
                     <span
                         class="bg-white text-gray-800 text-xs font-semibold px-4 py-1 rounded-full text-nowrap mt-10 mb-5 lg:mt-8 xl:mt-10 animate-on-scroll fade-in-up">
                         The #1 Job Platform in Sri Lanka
                     </span>
 
-                    <h1 class="mt-8 cus-font-size font-medium lg:text-6xl xl:text-7xl animate-on-scroll fade-in-up"
+                    <h1 class="mt-8 text-3.5xl font-medium lg:text-6xl xl:text-7xl animate-on-scroll fade-in-up"
                         style="animation-delay: 200ms;">Find Work. Hire Talent.</h1>
-                    <h1 class="mt-2 md:mt-5 cus-font-size font-medium lg:text-6xl xl:text-7xl animate-on-scroll fade-in-up"
+                    <h1 class="mt-2 md:mt-5 text-3.5xl font-medium lg:text-6xl xl:text-7xl animate-on-scroll fade-in-up"
                         style="animation-delay: 300ms;">Grow Your Business.</h1>
 
                     <hr class="mt-10 mb-5 border-gray-100 w-80 lg:w-full lg:mt-10 animate-on-scroll fade-in-up"
@@ -153,15 +150,15 @@
                     <div id="scrolling-gallery" class="flex whitespace-nowrap animate-scroll">
 
                         <div class="gallery-image-set flex-shrink-0 flex">
-                            <img src="assets/images/image1.jpg" alt="img1" class="gallery-image" />
-                            <img src="assets/images/image2.jpg" alt="img2" class="gallery-image" />
-                            <img src="assets/images/image3.jpg" alt="img3" class="gallery-image" />
-                            <img src="assets/images/image4.jpg" alt="img4" class="gallery-image" />
-                            <img src="assets/images/image5.jpg" alt="img5" class="gallery-image" />
-                            <img src="assets/images/image6.jpg" alt="img6" class="gallery-image" />
-                            <img src="assets/images/image7.jpg" alt="img7" class="gallery-image" />
-                            <img src="assets/images/image8.jpg" alt="img8" class="gallery-image" />
-                            <img src="assets/images/image9.jpg" alt="img9" class="gallery-image" />
+                            <img src="../assets/images/image1.jpg" alt="img1" class="gallery-image" />
+                            <img src="../assets/images/image2.jpg" alt="img2" class="gallery-image" />
+                            <img src="../assets/images/image3.jpg" alt="img3" class="gallery-image" />
+                            <img src="../assets/images/image4.jpg" alt="img4" class="gallery-image" />
+                            <img src="../assets/images/image5.jpg" alt="img5" class="gallery-image" />
+                            <img src="../assets/images/image6.jpg" alt="img6" class="gallery-image" />
+                            <img src="../assets/images/image7.jpg" alt="img7" class="gallery-image" />
+                            <img src="../assets/images/image8.jpg" alt="img8" class="gallery-image" />
+                            <img src="../assets/images/image9.jpg" alt="img9" class="gallery-image" />
                         </div>
                     </div>
                 </div>
@@ -172,15 +169,15 @@
                     <div class="md:hidden h-48 w-[65%] mt-8 overflow-hidden relative lg:-mt-2 rounded-lg">
                         <div id="scrolling-gallery" class="flex whitespace-nowrap animate-scroll">
                             <div class="gallery-image-set flex-shrink-0 flex">
-                                <img src="assets/images/image1.jpg" alt="img1" class="gallery-image" />
-                                <img src="assets/images/image2.jpg" alt="img2" class="gallery-image" />
-                                <img src="assets/images/image3.jpg" alt="img3" class="gallery-image" />
-                                <img src="assets/images/image4.jpg" alt="img4" class="gallery-image" />
-                                <img src="assets/images/image5.jpg" alt="img5" class="gallery-image" />
-                                <img src="assets/images/image6.jpg" alt="img6" class="gallery-image" />
-                                <img src="assets/images/image7.jpg" alt="img7" class="gallery-image" />
-                                <img src="assets/images/image8.jpg" alt="img8" class="gallery-image" />
-                                <img src="assets/images/image9.jpg" alt="img9" class="gallery-image" />
+                                <img src="../assets/images/image1.jpg" alt="img1" class="gallery-image" />
+                                <img src="../assets/images/image2.jpg" alt="img2" class="gallery-image" />
+                                <img src="../assets/images/image3.jpg" alt="img3" class="gallery-image" />
+                                <img src="../assets/images/image4.jpg" alt="img4" class="gallery-image" />
+                                <img src="../assets/images/image5.jpg" alt="img5" class="gallery-image" />
+                                <img src="../assets/images/image6.jpg" alt="img6" class="gallery-image" />
+                                <img src="../assets/images/image7.jpg" alt="img7" class="gallery-image" />
+                                <img src="../assets/images/image8.jpg" alt="img8" class="gallery-image" />
+                                <img src="../assets/images/image9.jpg" alt="img9" class="gallery-image" />
                             </div>
                         </div>
                     </div>
@@ -189,7 +186,7 @@
     </header>
 
     <!-- Main Section -->
-    <main class="custom-width mx-auto px-6 flex flex-col mb-8">
+    <main class="max-w-8xl mx-auto px-6 flex flex-col mb-8">
 
         <!-- Services Section -->
         <section id="services" class="bg-white py-20 lg:py-28">
@@ -374,7 +371,7 @@
                     <!-- Right content (Founder Card) -->
                     <div class="animate-on-scroll fade-in-left">
                         <div class="bg-white text-center rounded-2xl shadow-lg p-10 max-w-md mx-auto">
-                            <img src="assets/images/founder-image.jpg" alt="Founder Image"
+                            <img src="../assets/images/founder-image.jpg" alt="Founder Image"
                                 class="w-48 h-48 founder-image object-cover object-[center_10%] rounded-full mx-auto shadow-lg" />
                             <h3 class="font-signature text-nowrap text-2xl md:text-4xl text-gray-800 mt-4">
                                 Mohamed Thanseem
@@ -522,7 +519,7 @@
                         <h2 class="text-white text-xl font-bold">Designers</h2>
                     </div>
                     <div class="flex-1 rounded-2xl overflow-hidden">
-                        <img src="assets/images/image13.jpg" alt="Designers"
+                        <img src="../assets/images/image13.jpg" alt="Designers"
                             class="rounded-xl object-cover w-full h-full">
                     </div>
                 </div>
@@ -535,7 +532,7 @@
                         <h2 class="text-white text-xl font-bold">Programming</h2>
                     </div>
                     <div class="flex-1 rounded-2xl overflow-hidden">
-                        <img src="assets/images/image14.jpg" alt="Programming"
+                        <img src="../assets/images/image14.jpg" alt="Programming"
                             class="rounded-xl object-cover w-full h-full">
                     </div>
                 </div>
@@ -548,7 +545,7 @@
                         <h2 class="text-white text-xl font-bold">Construction</h2>
                     </div>
                     <div class="flex-1 rounded-2xl overflow-hidden">
-                        <img src="assets/images/image10.jpg" alt="Construction"
+                        <img src="../assets/images/image10.jpg" alt="Construction"
                             class="rounded-xl object-cover w-full h-full">
                     </div>
                 </div>
@@ -561,7 +558,7 @@
                         <h2 class="text-white text-xl font-bold">Writing</h2>
                     </div>
                     <div class="flex-1 rounded-2xl overflow-hidden">
-                        <img src="assets/images/image11.jpg" alt="Writing"
+                        <img src="../assets/images/image11.jpg" alt="Writing"
                             class="rounded-xl object-cover w-full h-full">
                     </div>
                 </div>
@@ -574,7 +571,7 @@
                         <h2 class="text-white text-xl font-medium">Marketing</h2>
                     </div>
                     <div class="flex-1 rounded-2xl overflow-hidden">
-                        <img src="assets/images/image12.jpg" alt="Marketing"
+                        <img src="../assets/images/image12.jpg" alt="Marketing"
                             class="rounded-xl object-cover w-full h-full">
                     </div>
                 </div>
@@ -602,8 +599,8 @@
     </main>
 
     <!-- Footer Section -->
-    <footer id="footer" class="animate-on-scroll fade-in-up custom-width mx-auto px-6 mb-6">
-        <div class="bg-black rounded-2xl w-full custom-width">
+    <footer id="footer" class="animate-on-scroll fade-in-up max-w-8xl mx-auto px-6 mb-6">
+        <div class="bg-black rounded-2xl w-full max-w-8xl">
             <div class="mx-auto py-16 px-6 md:px-14">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 max-w-7xl">
@@ -702,7 +699,7 @@
     <script>
 
     </script>
-    <script src="assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 
 </html>
