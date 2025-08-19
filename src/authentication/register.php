@@ -1,5 +1,4 @@
 <?php
-// Start session to access verification data
 session_start();
 
 // Check if an employee/admin has been verified
@@ -18,26 +17,24 @@ unset($_SESSION['user_type']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - QuickHire LK </title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../assets/css/auth.css"> <!-- Your common CSS with animations -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="../../dist/output.css">
+    <link rel="stylesheet" href="../../dist/main.css">
+    <script src="../../assets/js/jquery-3.7.1.min.js"></script>
 </head>
 
 <body class="m-0 p-6 md:p-2 h-screen box-border flex gap-8 bg-white overflow-hidden">
 
     <!-- Left Image Side -->
     <div class="hidden md:block w-1/2 h-full overflow-hidden rounded-xl">
-        <img src="../assets/images/signup-image.png" alt="Office Background" class="w-full h-full object-cover" />
+        <img src="../../assets/images/signup-image.png" alt="Office Background" class="w-full h-full object-cover" />
     </div>
 
     <!-- Right Form Side -->
     <div class="w-full md:w-1/2 h-full flex items-center">
         <div class="w-full max-w-md mx-auto">
             <h2 class="text-3xl font-bold mb-3 text-center">Sign Up</h2>
-            <p class="text-gray-500 custom-margin text-center">
+            <p class="text-gray-500 custom-margin text-center mb-20 3xl:mb-24">
                 <?php
-                // Display a custom message for verified users
                 if ($user_type === 'employee' || $user_type === 'admin') {
                     echo "Your ID has been verified. Please create your account.";
                 } else {
@@ -50,26 +47,27 @@ unset($_SESSION['user_type']);
 
                 <input type="hidden" name="user_type" value="<?php echo htmlspecialchars($user_type); ?>">
 
-                <div class="mb-5">
-                    <label for="full-name" class="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="bi bi-person text-gray-400"></i>
+                <div class="mb-5 flex flex-row gap-4">
+                    <div>
+                        <label for="full-name" class="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="bi bi-person text-gray-400"></i>
+                            </div>
+                            <input type="text" id="full-name" name="full-name" class="w-full pl-10 pr-4 border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                         </div>
-                        <input type="text" id="full-name" name="full-name" class="w-full pl-10 pr-4 border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                        <p id="fullname-error" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
-                    <p id="fullname-error" class="text-red-500 text-xs mt-1 hidden"></p>
-                </div>
-
-                <div class="mb-5">
-                    <label for="username" class="block mb-1 text-sm font-medium text-gray-700">Username</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="bi bi-at text-gray-400"></i>
+                    <div>
+                        <label for="username" class="block mb-1 text-sm font-medium text-gray-700">Username</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="bi bi-at text-gray-400"></i>
+                            </div>
+                            <input type="text" id="username" name="username" class="w-full pl-10 pr-4 border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                         </div>
-                        <input type="text" id="username" name="username" class="w-full pl-10 pr-4 border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                        <p id="username-error" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
-                    <p id="username-error" class="text-red-500 text-xs mt-1 hidden"></p>
                 </div>
 
                 <div class="mb-5">
@@ -97,7 +95,7 @@ unset($_SESSION['user_type']);
                     <p id="password-error" class="text-red-500 text-xs mt-1 hidden"></p>
                 </div>
 
-                <button type="submit" class="mt-6 w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition font-semibold">
+                <button type="submit" class="mt-6 w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition font-semibold cursor-pointer">
                     Sign Up
                 </button>
             </form>
@@ -111,8 +109,8 @@ unset($_SESSION['user_type']);
     </div>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="../assets/js/toast-notifications.js"></script>
-    <script src="../assets/js/registration-validation.js"></script>
+    <script src="../../assets/js/toast-notifications.js"></script>
+    <script src="../../assets/js/registration-validation.js"></script>
 </body>
 
 </html>

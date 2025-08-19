@@ -1,122 +1,118 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('registration-form');
-    if (!form) return;
+$(document).ready(function () {
+    const $form = $('#registration-form');
+    if ($form.length === 0) return;
 
-    const fields = {
-        fullName: document.getElementById('full-name'),
-        username: document.getElementById('username'),
-        email: document.getElementById('email'),
-        password: document.getElementById('password'),
+    const $fields = {
+        fullName: $('#full-name'),
+        username: $('#username'),
+        email: $('#email'),
+        password: $('#password'),
     };
 
-    const errors = {
-        fullName: document.getElementById('fullname-error'),
-        username: document.getElementById('username-error'),
-        email: document.getElementById('email-error'),
-        password: document.getElementById('password-error'),
+    const $errors = {
+        fullName: $('#fullname-error'),
+        username: $('#username-error'),
+        email: $('#email-error'),
+        password: $('#password-error'),
     };
 
-    // --- Form Submission Handler ---
-    form.addEventListener('submit', function (event) {
+    $form.on('submit', function (event) {
         event.preventDefault();
         if (!validateFields()) return;
 
-        const formData = new FormData(form);
-        fetch('register-api.php', { method: 'POST', body: formData })
-            .then(response => response.json())
-            .then(data => handleServerResponse(data))
-            .catch(error => {
-                console.error('Fetch Error:', error);
+        const formData = new FormData(this);
+        $.ajax({
+            url: '../../src/authentication/register-api.php',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: handleServerResponse,
+            error: function () {
                 showToast('A network error occurred. Please try again.', 'error');
-            });
+            }
+        });
     });
 
-    /**
-     * Handles the response from the server after the AJAX call.
-     * @param {object} data The JSON response from the server.
-     */
     function handleServerResponse(data) {
         if (data.status === 'success') {
             showToast(data.message, 'success');
-            setTimeout(() => { window.location.href = '../authentication/login.php'; }, 3500);
+            setTimeout(function () {
+                window.location.href = '../../src/authentication/login.php';
+            }, 2500);
         } else {
             if (data.message.includes('username')) {
-                showError(fields.username, errors.username, data.message);
+                showError($fields.username, $errors.username, data.message);
             } else if (data.message.includes('email')) {
-                showError(fields.email, errors.email, data.message);
+                showError($fields.email, $errors.email, data.message);
             } else {
                 showToast(data.message, 'error');
             }
         }
     }
 
-    /**
-     * Validates fields and shows/hides errors below the inputs.
-     * @returns {boolean}
-     */
     function validateFields() {
         let isValid = true;
-        Object.keys(fields).forEach(key => hideError(fields[key], errors[key]));
+        $.each($fields, function (key, $input) {
+            hideError($input, $errors[key]);
+        });
 
-        if (fields.fullName.value.trim() === '') { showError(fields.fullName, errors.fullName, 'This field is required.'); isValid = false; }
-        if (fields.username.value.trim() === '') { showError(fields.username, errors.username, 'This field is required.'); isValid = false; }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.value)) { showError(fields.email, errors.email, 'Please enter a valid email.'); isValid = false; }
-        if (fields.password.value.trim().length < 6) { showError(fields.password, errors.password, 'Password must be at least 6 characters.'); isValid = false; }
+        if ($fields.fullName.val().trim() === '') {
+            showError($fields.fullName, $errors.fullName, 'This field is required.');
+            isValid = false;
+        }
+        if ($fields.username.val().trim() === '') {
+            showError($fields.username, $errors.username, 'This field is required.');
+            isValid = false;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($fields.email.val())) {
+            showError($fields.email, $errors.email, 'Please enter a valid email.');
+            isValid = false;
+        }
+        if ($fields.password.val().trim().length < 6) {
+            showError($fields.password, $errors.password, 'Password must be at least 6 characters.');
+            isValid = false;
+        }
 
         return isValid;
     }
 
-    function showError(input, errorElement, message) {
-        errorElement.textContent = message;
-        errorElement.classList.remove('hidden');
-        input.classList.add('border-red-500');
-        input.focus();
+    function showError($input, $errorElement, message) {
+        $errorElement.text(message).removeClass('hidden');
+        $input.addClass('border-red-500').focus();
     }
 
-    function hideError(input, errorElement) {
-        errorElement.classList.add('hidden');
-        input.classList.remove('border-red-500');
+    function hideError($input, $errorElement) {
+        $errorElement.addClass('hidden');
+        $input.removeClass('border-red-500');
     }
 
     // --- Password Visibility Toggle ---
-    const togglePasswordIcon = document.getElementById('togglePassword');
-    togglePasswordIcon.addEventListener('click', function () {
-        const passwordField = fields.password;
-        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordField.setAttribute('type', type);
-        this.classList.toggle('bi-eye');
-        this.classList.toggle('bi-eye-slash');
+    $('#togglePassword').on('click', function () {
+        const $passwordField = $fields.password;
+        const type = $passwordField.attr('type') === 'password' ? 'text' : 'password';
+        $passwordField.attr('type', type);
+        $(this).toggleClass('bi-eye bi-eye-slash');
     });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Select the elements to animate
-    const leftImage = document.querySelector(".hidden.md\\:block");
-    const title = document.querySelector(".text-3xl.font-bold");
-    const subtitle = document.querySelector(".custom-margin");
-    const formElements = Array.from(document.querySelectorAll("#registration-form > *, .my-8, .mt-6"));
+    // --- Animation on Page Load ---
+    const $leftImage = $('.hidden.md\\:block');
+    const $title = $('.text-3xl.font-bold');
+    const $subtitle = $('.custom-margin');
+    const $formElements = $('#registration-form > *, .my-8, .mt-6');
 
-    // Animate the left image
-    if (leftImage) {
-        leftImage.classList.add('animate-slide-in-from-left');
+    if ($leftImage.length) {
+        $leftImage.addClass('animate-slide-in-from-left');
     }
-
-    // Animate the title with a delay
-    if (title) {
-        title.classList.add('animate-slide-in-from-bottom');
-        title.style.animationDelay = '0.2s';
+    if ($title.length) {
+        $title.addClass('animate-slide-in-from-bottom').css('animation-delay', '0.2s');
     }
-
-    // Animate the subtitle with a slightly longer delay
-    if (subtitle) {
-        subtitle.classList.add('animate-slide-in-from-bottom');
-        subtitle.style.animationDelay = '0.3s';
+    if ($subtitle.length) {
+        $subtitle.addClass('animate-slide-in-from-bottom').css('animation-delay', '0.3s');
     }
-
-    // Animate each form element with a staggered delay
-    formElements.forEach((element, index) => {
-        element.classList.add('animate-slide-in-from-bottom');
-        // Start the delay after the title/subtitle and increment for each element
-        element.style.animationDelay = `${0.4 + index * 0.1}s`;
+    $formElements.each(function (index) {
+        $(this).addClass('animate-slide-in-from-bottom')
+            .css('animation-delay', (0.4 + index * 0.1) + 's');
     });
 });

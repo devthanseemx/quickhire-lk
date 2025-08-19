@@ -5,26 +5,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login Page</title>
-  <link rel="stylesheet" href="../assets/css/auth.css">
-  <!-- Tailwind CSS File or CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <!-- Toastify Library CSS -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" href="../../dist/output.css">
+  <link rel="stylesheet" href="../../dist/main.css">
+  <script src="../../assets/js/jquery-3.7.1.min.js"></script>
 </head>
 
 <body class="m-0 h-screen box-border flex flex-row gap-8 bg-white p-5 md:p-2 overflow-hidden">
   <!-- Left Image Side -->
   <div class="hidden md:block w-1/2 h-full overflow-hidden rounded-xl">
-    <img src="../assets/images/login-image.jpg" alt="Login Background" class="w-full h-full object-cover" />
+    <img src="../../assets/images/login-image.jpg" alt="Login Background" class="w-full h-full object-cover" />
   </div>
 
   <!-- Right Form Side -->
   <div class="w-full md:w-1/2 h-full flex items-center">
     <div class="w-full max-w-md mx-auto">
       <h2 class="text-3xl font-bold mb-3 text-center">Login</h2>
-      <p class="text-gray-500 text-center mb-20">Please enter your details to login</p>
+      <p class="text-gray-500 text-center mb-20 3xl:mb-24">Please enter your details to login</p>
 
       <form id="login-form" action="login-api.php" method="POST" novalidate>
         <div class="mb-5">
@@ -33,6 +29,7 @@
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="bi bi-person text-gray-400"></i></div>
             <input type="text" id="username" name="username" class="w-full pl-10 pr-4 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </div>
+          <p id="username-error" class="text-red-500 text-xs mt-1 hidden"></p>
         </div>
 
         <div class="mb-3">
@@ -42,6 +39,7 @@
             <input type="password" id="password" name="password" class="w-full pl-10 pr-10 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
             <div class="absolute inset-y-0 right-0 pr-3 flex items-center"><i class="bi bi-eye text-gray-400 hover:text-gray-600 cursor-pointer" id="togglePassword"></i></div>
           </div>
+          <p id="password-error" class="text-red-500 text-xs mt-1 hidden"></p>
         </div>
 
         <p class="mb-9 text-sm text-left text-gray-500">
@@ -49,7 +47,7 @@
           <a href="forgot_password.php" class="text-indigo-600 hover:underline">Reset it</a>
         </p>
 
-        <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-md hover:bg-indigo-700 transition">
+        <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-md hover:bg-indigo-700 transition cursor-pointer">
           Login
         </button>
         <p class="mt-6 text-sm text-center text-gray-500">
@@ -66,8 +64,8 @@
   </div>
 
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-  <script src="../assets/js/toast-notifications.js"></script>
-  <script src="../assets/js/login-validation.js"></script>
+  <script src="../../assets/js/toast-notifications.js"></script>
+  <script src="../../assets/js/login-validation.js"></script>
 
 </body>
 

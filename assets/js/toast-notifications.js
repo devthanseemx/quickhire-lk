@@ -37,7 +37,7 @@ function showToast(message, type = 'info') {
 
     Toastify({
         node: toastNode,
-        duration: 3000,
+        duration: 2000,
         gravity: "top",
         position: "right",
         stopOnFocus: true,
