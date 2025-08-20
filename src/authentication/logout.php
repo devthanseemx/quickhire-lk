@@ -14,6 +14,7 @@ session_start();
     <?php include '../layouts/partials/dashboard-loading.html'; ?>
     <script>
         setTimeout(function() {
+            // Clear session via AJAX or PHP
             fetch('logout_action.php', { method: 'POST' })
                 .finally(() => window.location.href = 'login.php');
         }, 1200);
