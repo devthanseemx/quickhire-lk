@@ -15,7 +15,7 @@ session_start();
     <script>
         setTimeout(function() {
             // Clear session via AJAX or PHP
-            fetch('logout_action.php', { method: 'POST' })
+            fetch('logout-action.php', { method: 'POST' })
                 .finally(() => window.location.href = 'login.php');
         }, 1200);
     </script>

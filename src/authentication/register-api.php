@@ -2,7 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 
-require_once '../../db/db_connection.php';
+require_once '../../db/db.php';
 
 $response = ['status' => 'error', 'message' => 'An unknown error occurred.'];
 

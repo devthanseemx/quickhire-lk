@@ -5,7 +5,7 @@ session_start();
 $error_message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require_once '../db/company_db_connection.php'; // Use the company DB connection
+    require_once '../db/company-db.php'; // Use the company DB connection
 
     $provided_id = strtoupper(trim($_POST['verification_id']));
     $user_type = null;

@@ -34,3 +34,19 @@ function sendMail($to, $subject, $body) {
         return false;
     }
 }
+
+// ...existing code...
+function sendOtpEmail($email, $otp_code) {
+    // Use absolute path for the template
+    $template_path = __DIR__ . '/email/otp.html';
+    if (!file_exists($template_path)) {
+        // Handle error: template file not found
+        return false;
+    }
+    $template = file_get_contents($template_path);
+
+    $body = str_replace('{{otp_code}}', $otp_code, $template);
+    $subject = "Your QuickHire Password Reset Code";
+    return sendMail($email, $subject, $body);
+}
+// ...existing code...
