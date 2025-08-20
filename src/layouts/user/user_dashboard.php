@@ -11,18 +11,21 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 // Get the username from the session to display it
 $username = htmlspecialchars($_SESSION['username']);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../dist/output.css">
+    <link rel="stylesheet" href="../../../dist/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="../../../assets/js/toast-notifications.js"></script>
+
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center h-screen">
-    <?php include '../../layouts/partials/dashboard_loading.php'; ?>
+    <?php include '../../layouts/partials/dashboard_loading.php'; require_once '../partials/session_toast.php'; showLoginSuccessToast();?>
+
     <div class="bg-white p-12 rounded-lg shadow-lg text-center">
         <?php echo ($_SESSION['user_type']) ?>
         <h1 class="text-3xl font-bold text-gray-800">Welcome to the Dashboard!</h1>

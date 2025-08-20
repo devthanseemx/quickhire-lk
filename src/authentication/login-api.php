@@ -2,23 +2,22 @@
 session_start();
 
 header('Content-Type: application/json');
-require_once '../../db/db_connection.php'; 
+require_once '../../db/db_connection.php';
 
 $response = ['status' => 'error', 'message' => 'An unknown error occurred.'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = strtolower(trim($_POST['username'] ?? ''));
+    $login = strtolower(trim($_POST['username'] ?? ''));
     $password = $_POST['password'] ?? '';
 
-    if (empty($username) || empty($password)) {
-        $response = ['status' => 'error', 'message' => 'Username and password are required.'];
+    if (empty($login) || empty($password)) {
+        $response = ['status' => 'error', 'field' => empty($login) ? 'username' : 'password', 'message' => 'Username/Email and password are required.'];
         echo json_encode($response);
         exit();
     }
 
-    // Check login from user_accounts
-    $stmt = $conn->prepare("SELECT id, username, password, user_type FROM user_accounts WHERE username = ?");
-    $stmt->bind_param("s", $username);
+    $stmt = $conn->prepare("SELECT id, username, password, user_type FROM user_accounts WHERE username = ? OR email = ?");
+    $stmt->bind_param("ss", $login, $login);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -26,13 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
 
         if (password_verify($password, $user['password'])) {
-            // Store session data
             $_SESSION['loggedin'] = true;
             $_SESSION['id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_type'] = $user['user_type'];
+            $_SESSION['login_success'] = 'Login successful';
 
-            // Decide dashboard URL based on role
             if ($user['user_type'] === 'admin') {
                 $dashboard = '../layouts/admin/admin_dashboard.php';
             } elseif ($user['user_type'] === 'employee') {
@@ -47,14 +45,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'redirect' => $dashboard
             ];
         } else {
-            $response = ['status' => 'error', 'message' => 'Invalid username or password.'];
+            $response = ['status' => 'error', 'field' => 'password', 'message' => 'Incorrect password.'];
         }
     } else {
-        $response = ['status' => 'error', 'message' => 'Invalid username or password.'];
+        $response = ['status' => 'error', 'field' => 'username', 'message' => 'Incorrect username or email.'];
     }
 
     $stmt->close();
 }
+
 
 $conn->close();
 echo json_encode($response);

@@ -38,9 +38,17 @@ $(document).ready(function () {
     function handleServerResponse(data) {
         if (data.status === 'success') {
             showToast(data.message, 'success');
+            $form[0].reset();
+
+            // Trigger email queue sender via AJAX (non-blocking)
+            $.ajax({
+                url: '../../src/utils/sendQueuedEmails.php',
+                type: 'POST'
+            });
+
             setTimeout(function () {
                 window.location.href = '../../src/authentication/login.php';
-            }, 2500);
+            }, 3000);
         } else {
             if (data.message.includes('username')) {
                 showError($fields.username, $errors.username, data.message);

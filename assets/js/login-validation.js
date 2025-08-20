@@ -44,14 +44,13 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
                 if (data.status === 'success') {
-                    showToast(data.message, 'success');
                     setTimeout(function () {
                         window.location.href = data.redirect;
-                    }, 2000);
+                    }, 200);
                 } else {
-                    if (data.message.toLowerCase().includes('username')) {
+                    if (data.field === 'username') {
                         showError($fields.username, $errors.username, data.message);
-                    } else if (data.message.toLowerCase().includes('password')) {
+                    } else if (data.field === 'password') {
                         showError($fields.password, $errors.password, data.message);
                     } else {
                         showToast(data.message, 'error');

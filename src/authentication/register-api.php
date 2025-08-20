@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $verified_id = $_SESSION['verified_id'];
                             if ($user_type === 'employee') {
                                 $stmt_role = $conn->prepare("INSERT INTO employees (user_account_id, employee_id_ref) VALUES (?, ?)");
-                            } else { 
+                            } else {
                                 $stmt_role = $conn->prepare("INSERT INTO admins (user_account_id, admin_id_ref) VALUES (?, ?)");
                             }
                             $stmt_role->bind_param("is", $new_user_account_id, $verified_id);
@@ -73,6 +73,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                     if ($role_insert_success) {
                         $response = ['status' => 'success', 'message' => 'Registration successful!'];
+
+                        // Queue email for sending
+                        $stmt_queue = $conn->prepare("INSERT INTO email_queue (user_id, email, name) VALUES (?, ?, ?)");
+                        $stmt_queue->bind_param("iss", $new_user_account_id, $email, $fullName);
+                        $stmt_queue->execute();
+                        $stmt_queue->close();
+                        
                     } else {
                         $response = ['status' => 'error', 'message' => 'Account created, but role profile failed. Please contact support.'];
                     }
@@ -90,5 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
+
 
 echo json_encode($response);

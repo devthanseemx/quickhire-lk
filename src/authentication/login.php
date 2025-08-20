@@ -24,7 +24,7 @@
 
       <form id="login-form" action="login-api.php" method="POST" novalidate>
         <div class="mb-5">
-          <label for="username" class="block mb-1 text-sm font-medium text-gray-700">Username</label>
+          <label for="username" class="block mb-1 text-sm font-medium text-gray-700">Email or Username</label>
           <div class="relative">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="bi bi-person text-gray-400"></i></div>
             <input type="text" id="username" name="username" class="w-full pl-10 pr-4 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
@@ -44,7 +44,7 @@
 
         <p class="mb-9 text-sm text-left text-gray-500">
           Forgot Password?
-          <a href="forgot_password.php" class="text-indigo-600 hover:underline">Reset it</a>
+          <a href="forgot-password.php" class="text-indigo-600 hover:underline">Reset it</a>
         </p>
 
         <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-md hover:bg-indigo-700 transition cursor-pointer">
