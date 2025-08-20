@@ -24,7 +24,7 @@ $username = htmlspecialchars($_SESSION['username']);
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center h-screen">
-    <?php include '../../layouts/partials/dashboard_loading.php'; require_once '../partials/session_toast.php'; showLoginSuccessToast();?>
+    <?php include '../partials/dashboard-loading.html'; require_once '../partials/session_toast.php'; showLoginSuccessToast();?>
 
     <div class="bg-white p-12 rounded-lg shadow-lg text-center">
         <?php echo ($_SESSION['user_type']) ?>

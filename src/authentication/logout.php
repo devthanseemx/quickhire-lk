@@ -1,14 +1,22 @@
 <?php
-// Start the session
+
 session_start();
-
-// Unset all of the session variables
-$_SESSION = [];
-
-// Destroy the session
-session_destroy();
-
-// Redirect to the login page
-header("Location: login.php");
-exit;
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../../../dist/output.css">
+    <link rel="stylesheet" href="../../../dist/main.css">
+    <meta http-equiv="refresh" content="1.5;url=login.php">
+    <title>Logging Out...</title>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <?php include '../layouts/partials/dashboard-loading.html'; ?>
+    <script>
+        setTimeout(function() {
+            fetch('logout_action.php', { method: 'POST' })
+                .finally(() => window.location.href = 'login.php');
+        }, 1200);
+    </script>
+</body>
+</html>
