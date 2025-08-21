@@ -22,7 +22,7 @@ $verified_id = $_SESSION['verified_id'] ?? null;
 
     <!-- Left Image Side -->
     <div class="hidden md:block w-1/2 h-full overflow-hidden rounded-xl">
-        <img src="../../assets/images/signup-image.png" alt="Office Background" class="w-full h-full object-cover" />
+        <img src="../../assets/images/register-image.jpg" alt="Office Background" class="w-full h-full object-cover" />
     </div>
 
     <!-- Right Form Side -->

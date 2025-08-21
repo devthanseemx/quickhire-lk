@@ -13,7 +13,7 @@
 <body class="m-0 h-screen box-border flex flex-row gap-8 bg-white p-5 md:p-2 overflow-hidden">
     <!-- Left Image Side -->
     <div class="hidden md:block w-1/2 h-full overflow-hidden rounded-xl">
-        <img src="../../assets/images/forgot-password.jpg" alt="Login Background" class="w-full h-full object-cover" />
+        <img src="../../assets/images/forget-password-image.jpg" alt="Login Background" class="w-full h-full object-cover" />
     </div>
 
     <div class="w-full md:w-1/2 h-full flex items-center">
@@ -49,6 +49,9 @@
                     <p id="codeError" class="text-red-500 text-xs mt-1 hidden"></p>
                 </div>
                 <button id="verify-code-btn" type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 cursor-pointer rounded-md hover:bg-indigo-700 transition">Verify Code</button>
+                <p class="mt-6 text-sm text-center text-gray-500">
+                    <a href="forgot-password.php" class="text-indigo-600 hover:text-indigo-400 font-medium">Go Back</a>
+                </p>
             </form>
         </div>
 
