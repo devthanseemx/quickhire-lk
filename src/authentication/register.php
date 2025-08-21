@@ -1,6 +1,5 @@
 <?php
 session_start();
-$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
 // Check if an employee/admin has been verified
 $user_type = $_SESSION['user_type'] ?? 'user'; // Default to 'user'
@@ -24,7 +23,6 @@ unset($_SESSION['user_type']);
 </head>
 
 <body class="m-0 p-6 md:p-2 h-screen box-border flex gap-8 bg-white overflow-hidden">
-    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
     <!-- Left Image Side -->
     <div class="hidden md:block w-1/2 h-full overflow-hidden rounded-xl">

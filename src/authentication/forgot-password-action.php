@@ -51,7 +51,7 @@ function handle_send_code($conn)
     $stmt->close();
 
     $code = random_int(10000, 99999);
-    $expires = time() + (15 * 60);
+    $expires = time() + (5 * 60);
 
     // Store code
     $stmt = $conn->prepare("DELETE FROM password_resets WHERE email = ?");

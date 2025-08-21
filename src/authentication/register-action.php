@@ -8,11 +8,6 @@ $response = ['status' => 'error', 'message' => 'An unknown error occurred.'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'] ?? '')) {
-        echo json_encode(["status" => "error", "code" => "ERR_CSRF", "message" => "Invalid session token"]);
-        exit;
-    }
-
     // Normalize input for case-insensitivity
     $fullName = trim($_POST['full-name'] ?? '');
     $username = strtolower(trim($_POST['username'] ?? ''));
@@ -39,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $response = ['status' => 'error', 'message' => 'This email address is already registered.'];
         } else {
             // --- Insert into `user_accounts` ---
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT); //some issues may be depend on this
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
             $sql_insert_account = "INSERT INTO user_accounts (full_name, username, email, password, user_type) VALUES (?, ?, ?, ?, ?)";
 
             if ($stmt_insert_account = $conn->prepare($sql_insert_account)) {
@@ -79,9 +74,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($role_insert_success) {
                         $response = ['status' => 'success', 'message' => 'Registration successful!'];
 
-                        // Queue email for sending
-                        $stmt_queue = $conn->prepare("INSERT INTO email_queue (user_id, email, name) VALUES (?, ?, ?)");
-                        $stmt_queue->bind_param("iss", $new_user_account_id, $email, $fullName);
+                        $subject = "Welcome to QuickHire LK!";
+                        $template = "confirmation";
+                        $template_data = json_encode(['name' => $fullName]);
+
+                        $stmt_queue = $conn->prepare("INSERT INTO email_queue (user_id, email, subject, template, template_data) VALUES (?, ?, ?, ?, ?)");
+                        $stmt_queue->bind_param("issss", $new_user_account_id, $email, $subject, $template, $template_data);
                         $stmt_queue->execute();
                         $stmt_queue->close();
                     } else {
