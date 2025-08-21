@@ -7,10 +7,7 @@
     <title>Forget Password</title>
     <link rel="stylesheet" href="../../dist/output.css">
     <link rel="stylesheet" href="../../dist/main.css">
-    <!-- Bootstrap Icons for the envelope icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <!-- Toastify Library CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="../../assets/js/jquery-3.7.1.min.js"></script>
 </head>
 
 <body class="m-0 h-screen box-border flex flex-row gap-8 bg-white p-5 md:p-2 overflow-hidden">
@@ -43,7 +40,7 @@
             <h2 class="text-3xl font-bold mb-3 text-center">Check your Email</h2>
             <p class="text-gray-500 text-center mb-1">Code sent to your email address</p>
 
-            <p id="timer" class="text-sm text-center text-indigo-600 mb-8 hidden"></p>
+            <p id="timer" class="timer-paragraph text-sm text-center text-indigo-600 mb-8 hidden"></p>
 
             <form id="verify-code-form">
                 <div class="mb-5">

@@ -155,3 +155,50 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Initial State ---
     showSection('email');
 });
+
+
+$(document).ready(function () {
+    let imageAnimated = false; 
+
+    function animateSection($section) {
+        const $titles = $section.find('h2.text-3xl.font-bold');
+        const $subtitles = $section.find('p.text-gray-500');
+        const $formElements = $section.find('form > *');
+        const $timer = $section.find('.timer-paragraph');
+
+        // Animate left-side image ONLY for first section
+        if (!imageAnimated && $section.attr('id') === 'check-email-section') {
+            $('.hidden.md\\:block').addClass('animate-slide-in-from-left');
+            imageAnimated = true;
+        }
+
+        // Animate titles
+        $titles.each(function (index) {
+            $(this).addClass('animate-slide-in-from-bottom')
+                .css('animation-delay', (0.2 + index * 0.1) + 's');
+        });
+
+        // Animate subtitles
+        $subtitles.each(function (index) {
+            $(this).addClass('animate-slide-in-from-bottom')
+                .css('animation-delay', (0.3 + index * 0.1) + 's');
+        });
+
+        // Animate form elements
+        $formElements.each(function (index) {
+            $(this).addClass('animate-slide-in-from-bottom')
+                .css('animation-delay', (0.4 + index * 0.1) + 's');
+        });
+
+        // Animate timer paragraph from left → right
+        if ($timer.length) {
+            $timer.addClass('animate-slide-in-from-bottom')
+                .css('animation-delay', '0.6s');
+        }
+    }
+
+    // --- Initial load: animate the first section (check email) ---
+    animateSection($('#check-email-section'));
+    animateSection($('#code-section'));
+    animateSection($('#reset-section'));
+});
