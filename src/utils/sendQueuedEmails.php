@@ -1,33 +1,51 @@
 <?php
-require_once '../../db/db_connection.php';
+require_once '../../db/db.php';
 require_once 'sendMail.php';
 
-// Fetch unsent emails
-$result = $conn->query("SELECT * FROM email_queue WHERE sent = 0 LIMIT 10");
+// --- Base folder for email templates ---
+$templateBase = __DIR__ . '/../utils/email/';
+
+$result = $conn->query("SELECT * FROM email_queue WHERE sent = 0 ORDER BY created_at ASC LIMIT 10");
 
 while ($row = $result->fetch_assoc()) {
-    $email = $row['email'];
-    $name = $row['name'];
-    $user_id = $row['user_id'];
+    $templateName = $row['template']; // e.g., 'confirmation', 'otp', 'order'
+    $templatePath = $templateBase . $templateName . '.html';
 
-    // Load confirmation template
-    $template = file_get_contents('email/confirmation.html');
-    $body = str_replace('{{name}}', htmlspecialchars($name), $template);
+    // --- Skip if template not found ---
+    if (!file_exists($templatePath)) {
+        error_log("Template file not found: {$templatePath}");
+        continue;
+    }
 
-    $subject = "Welcome to QuickHire LK!";
+    $templateContent = file_get_contents($templatePath);
 
-    if (sendMail($email, $subject, $body)) {
-        // Mark as sent
-        $stmt = $conn->prepare("UPDATE email_queue SET sent = 1 WHERE id = ?");
+    // --- Decode template data (JSON) and replace placeholders ---
+    $data = json_decode($row['template_data'], true);
+    if (!empty($data) && is_array($data)) {
+        foreach ($data as $key => $value) {
+            $templateContent = str_replace('{{' . $key . '}}', htmlspecialchars($value), $templateContent);
+        }
+    }
+
+    // --- Send email ---
+    $sent = sendMail($row['email'], $row['subject'], $templateContent);
+
+    if ($sent) {
+        // --- Delete email from queue after sending ---
+        $stmt = $conn->prepare("DELETE FROM email_queue WHERE id = ?");
         $stmt->bind_param("i", $row['id']);
         $stmt->execute();
         $stmt->close();
 
-        // Delete the row after sending
-        $stmt_del = $conn->prepare("DELETE FROM email_queue WHERE id = ?");
-        $stmt_del->bind_param("i", $row['id']);
-        $stmt_del->execute();
-        $stmt_del->close();
+        echo "Email sent to {$row['email']} ({$templateName})\n";
+    } else {
+        // --- Increment retry_count if failed ---
+        $stmt = $conn->prepare("UPDATE email_queue SET retry_count = retry_count + 1 WHERE id = ?");
+        $stmt->bind_param("i", $row['id']);
+        $stmt->execute();
+        $stmt->close();
+
+        error_log("Failed to send email to {$row['email']} ({$templateName})");
     }
 }
 

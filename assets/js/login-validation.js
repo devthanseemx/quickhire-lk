@@ -36,7 +36,7 @@ $(document).ready(function () {
         // AJAX login
         const formData = new FormData($form[0]);
         $.ajax({
-            url: 'login-api.php',
+            url: 'login-action.php',
             type: 'POST',
             data: formData,
             processData: false,

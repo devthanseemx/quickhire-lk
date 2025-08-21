@@ -22,7 +22,7 @@
       <h2 class="text-3xl font-bold mb-3 text-center">Login</h2>
       <p class="text-gray-500 text-center mb-20 3xl:mb-24">Please enter your details to login</p>
 
-      <form id="login-form" action="login-api.php" method="POST" novalidate>
+      <form id="login-form" action="login-action.php" method="POST" novalidate>
         <div class="mb-5">
           <label for="username" class="block mb-1 text-sm font-medium text-gray-700">Email or Username</label>
           <div class="relative">

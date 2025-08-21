@@ -8,6 +8,11 @@ $response = ['status' => 'error', 'message' => 'An unknown error occurred.'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'] ?? '')) {
+        echo json_encode(["status" => "error", "code" => "ERR_CSRF", "message" => "Invalid session token"]);
+        exit;
+    }
+
     // Normalize input for case-insensitivity
     $fullName = trim($_POST['full-name'] ?? '');
     $username = strtolower(trim($_POST['username'] ?? ''));
@@ -34,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $response = ['status' => 'error', 'message' => 'This email address is already registered.'];
         } else {
             // --- Insert into `user_accounts` ---
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT); //some issues may be depend on this
             $sql_insert_account = "INSERT INTO user_accounts (full_name, username, email, password, user_type) VALUES (?, ?, ?, ?, ?)";
 
             if ($stmt_insert_account = $conn->prepare($sql_insert_account)) {
@@ -79,7 +84,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $stmt_queue->bind_param("iss", $new_user_account_id, $email, $fullName);
                         $stmt_queue->execute();
                         $stmt_queue->close();
-                        
                     } else {
                         $response = ['status' => 'error', 'message' => 'Account created, but role profile failed. Please contact support.'];
                     }

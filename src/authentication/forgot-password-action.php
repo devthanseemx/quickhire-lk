@@ -3,11 +3,9 @@
 session_start();
 header('Content-Type: application/json');
 
-// --- INCLUDE YOUR REQUIRED FILES ---
-require '../../db/db.php'; // Your mysqli database connection file
-require '../utils/sendMail.php'; // Your file that now contains sendOtpEmail()
+require '../../db/db.php';
+require '../utils/sendMail.php';
 
-// --- HELPER FUNCTION FOR JSON RESPONSE ---
 function json_response($status, $message, $field = null, $redirect = null)
 {
     $response = ['status' => $status, 'message' => $message];
@@ -19,7 +17,6 @@ function json_response($status, $message, $field = null, $redirect = null)
 
 // --- MAIN LOGIC ROUTER ---
 $action = $_POST['action'] ?? '';
-// $conn is your mysqli connection variable from db_connection.php
 
 switch ($action) {
     case 'send_code':
@@ -66,12 +63,42 @@ function handle_send_code($conn)
     $stmt->execute();
     $stmt->close();
 
-    // Use the new, dedicated function to send the OTP email
-    if (sendOtpEmail($email, $code)) {
-        json_response('success', 'Verification code sent');
-    } else {
-        json_response('error', 'Could not send the verification email. Please try again later.', 'email');
+    // --- Insert OTP into password_resets table (same as before) ---
+    $stmt = $conn->prepare("DELETE FROM password_resets WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt = $conn->prepare("INSERT INTO password_resets (email, code, expires) VALUES (?, ?, ?)");
+    $stmt->bind_param("ssi", $email, $code, $expires);
+    $stmt->execute();
+    $stmt->close();
+
+    // --- Get user ID from email ---
+    $stmt_user = $conn->prepare("SELECT id, full_name FROM user_accounts WHERE email = ?");
+    $stmt_user->bind_param("s", $email);
+    $stmt_user->execute();
+    $result = $stmt_user->get_result();
+
+    if ($result->num_rows === 0) {
+        $stmt_user->close();
+        json_response('error', 'No account found with that email address.', 'email');
     }
+
+    $user = $result->fetch_assoc();
+    $user_id = $user['id'];
+    $user_name = $user['full_name'];
+    $stmt_user->close();
+
+    // --- Queue email instead of sending directly ---
+    $template_data = json_encode(['otp_code' => $code, 'name' => $user_name]);
+    $subject = "Your QuickHire Password Reset Code";
+    $template = 'otp';
+
+    $stmt_queue = $conn->prepare("INSERT INTO email_queue (user_id, email, subject, template, template_data) VALUES (?, ?, ?, ?, ?)");
+    $stmt_queue->bind_param("issss", $user_id, $email, $subject, $template, $template_data);
+    $stmt_queue->execute();
+    $stmt_queue->close();
+
+    json_response('success', 'Verification code sent');
 }
 
 function handle_verify_code($conn)
@@ -121,7 +148,6 @@ function handle_reset_password($conn)
     $email = $_SESSION['reset_email_verified'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // FIX: Use the correct table name (user_accounts)
     $stmt = $conn->prepare("UPDATE user_accounts SET password = ? WHERE email = ?");
     $stmt->bind_param("ss", $hashed_password, $email);
     if (!$stmt->execute()) {

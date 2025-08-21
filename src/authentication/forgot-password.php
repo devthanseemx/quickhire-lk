@@ -42,7 +42,7 @@
         <div id="code-section" class="w-full max-w-md mx-auto hidden">
             <h2 class="text-3xl font-bold mb-3 text-center">Check your Email</h2>
             <p class="text-gray-500 text-center mb-1">Code sent to your email address</p>
-            
+
             <p id="timer" class="text-sm text-center text-indigo-600 mb-8 hidden"></p>
 
             <form id="verify-code-form">
@@ -78,7 +78,7 @@
     <!-- External JS files -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="../../assets/js/toast-notifications.js"></script>
-    
+
     <!-- FIXED: Consolidated and corrected inline JavaScript -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -164,13 +164,24 @@
                 const formData = new FormData(forms.sendCode);
                 formData.append('action', 'send_code');
 
-                fetch(apiUrl, { method: "POST", body: formData })
+                fetch(apiUrl, {
+                        method: "POST",
+                        body: formData
+                    })
                     .then(res => res.json())
                     .then(data => {
                         if (data.status === "success") {
-                            // Assuming showToast is in your toast-notifications.js file
+                            // Show success message immediately
                             showToast(data.message, "success");
                             showSection('code');
+
+                            // --- Trigger email queue sending via AJAX ---
+                            fetch('../utils/sendQueuedEmails.php', {
+                                method: 'POST'
+                            }).catch(err => {
+                                console.error('Queue processor failed', err);
+                            });
+
                         } else {
                             showError(data.field, data.message);
                         }
@@ -178,14 +189,18 @@
                     .catch(() => showError('email', 'A network error occurred. Please try again.'));
             });
 
+
             forms.verifyCode.addEventListener("submit", (e) => {
                 e.preventDefault();
                 clearErrors();
                 const formData = new FormData(forms.verifyCode);
                 formData.append('email', document.getElementById('email').value);
                 formData.append('action', 'verify_code');
-                
-                fetch(apiUrl, { method: "POST", body: formData })
+
+                fetch(apiUrl, {
+                        method: "POST",
+                        body: formData
+                    })
                     .then(res => res.json())
                     .then(data => {
                         if (data.status === "success") {
@@ -204,7 +219,10 @@
                 const formData = new FormData(forms.resetPassword);
                 formData.append('action', 'reset_password');
 
-                fetch(apiUrl, { method: "POST", body: formData })
+                fetch(apiUrl, {
+                        method: "POST",
+                        body: formData
+                    })
                     .then(res => res.json())
                     .then(data => {
                         if (data.status === "success") {
