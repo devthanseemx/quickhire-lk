@@ -18,11 +18,11 @@ $username = htmlspecialchars($_SESSION['username']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../dist/output.css">
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center h-screen">
-    <?php include '../../layouts/partials/dashboard_loading.php'; ?>
+    <?php include '../partials/dashboard-loading.html'; ?>
     <div class="bg-white p-12 rounded-lg shadow-lg text-center">
         <?php echo ($_SESSION['user_type']) ?>
         <h1 class="text-3xl font-bold text-gray-800">Welcome to the Dashboard!</h1>

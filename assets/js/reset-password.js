@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const timerDisplay = document.getElementById('timer');
         let time = durationInSeconds;
 
-        // Clear any existing timer before starting a new one
         clearInterval(timerInterval);
         timerDisplay.classList.remove('hidden');
 
@@ -40,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             time--;
         };
 
-        updateTimer(); // Call immediately to show the initial time
+        updateTimer();
         timerInterval = setInterval(updateTimer, 1000);
     }
 
@@ -57,9 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
         Object.values(sections).forEach(section => section.classList.add("hidden"));
         sections[sectionName].classList.remove("hidden");
 
-        // Logic to start/stop the timer based on the visible section
+
         if (sectionName === 'code') {
-            startTimer(300); // Starts a 5-minute (300 seconds) timer
+            startTimer(300);
         } else {
             stopTimer(); 
         }
@@ -88,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(res => res.json())
             .then(data => {
                 if (data.status === "success") {
-                    // Show success message immediately
                     showToast(data.message, "success");
                     showSection('code');
 
@@ -152,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(() => showError('password', 'A network error occurred. Please try again.'));
     });
 
-    // --- Initial State ---
     showSection('email');
 });
 
@@ -166,38 +163,32 @@ $(document).ready(function () {
         const $formElements = $section.find('form > *');
         const $timer = $section.find('.timer-paragraph');
 
-        // Animate left-side image ONLY for first section
         if (!imageAnimated && $section.attr('id') === 'check-email-section') {
             $('.hidden.md\\:block').addClass('animate-slide-in-from-left');
             imageAnimated = true;
         }
 
-        // Animate titles
         $titles.each(function (index) {
             $(this).addClass('animate-slide-in-from-bottom')
                 .css('animation-delay', (0.2 + index * 0.1) + 's');
         });
 
-        // Animate subtitles
         $subtitles.each(function (index) {
             $(this).addClass('animate-slide-in-from-bottom')
                 .css('animation-delay', (0.3 + index * 0.1) + 's');
         });
 
-        // Animate form elements
         $formElements.each(function (index) {
             $(this).addClass('animate-slide-in-from-bottom')
                 .css('animation-delay', (0.4 + index * 0.1) + 's');
         });
 
-        // Animate timer paragraph from left → right
         if ($timer.length) {
             $timer.addClass('animate-slide-in-from-bottom')
                 .css('animation-delay', '0.6s');
         }
     }
 
-    // --- Initial load: animate the first section (check email) ---
     animateSection($('#check-email-section'));
     animateSection($('#code-section'));
     animateSection($('#reset-section'));

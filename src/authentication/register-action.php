@@ -62,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                             $stmt_role->close();
                             unset($_SESSION['verified_id']);
+                            unset($_SESSION['user_type']);
                         }
                     } elseif ($user_type === 'user') {
                         $stmt_role = $conn->prepare("INSERT INTO users (user_account_id) VALUES (?)");

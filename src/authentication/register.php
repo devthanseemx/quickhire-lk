@@ -1,13 +1,9 @@
 <?php
 session_start();
 
-// Check if an employee/admin has been verified
-$user_type = $_SESSION['user_type'] ?? 'user'; // Default to 'user'
+$user_type = $_SESSION['user_type'] ?? 'user'; 
 $verified_id = $_SESSION['verified_id'] ?? null;
 
-// Important: Clear the session variables after reading them to prevent misuse
-unset($_SESSION['verified_id']);
-unset($_SESSION['user_type']);
 ?>
 
 <!DOCTYPE html>
@@ -98,6 +94,9 @@ unset($_SESSION['user_type']);
                 <button type="submit" class="mt-6 w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition font-semibold cursor-pointer">
                     Sign Up
                 </button>
+                <p class="mt-6 text-sm text-center text-gray-500">
+          <a href="../index.html" class="text-indigo-600 hover:text-indigo-400 font-medium">Go Home</a>
+        </p>
             </form>
 
             <hr class="my-8" />
